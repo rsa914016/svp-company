@@ -15,7 +15,7 @@ const ref = database.ref('Users');
 var searchString= "";
 const company = sessionStorage.getItem('company');
 if(!company){
-    window.location.href = "stapage.html"
+    window.location.href = "login.html"
 }
 
 function GetData(){

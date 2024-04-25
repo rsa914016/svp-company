@@ -97,7 +97,7 @@ const getElementVal = (id) => {
 function checkStatus(){
   firebase.auth().onAuthStateChanged((user) => {
     if (!user) {
-        window.location.href = "stapage.html"
+        window.location.href = "login.html"
     }
     else{
         window.location.href = "admin.html";
