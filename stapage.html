@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Status | Check</title>
+    <link rel="shortcut icon" href="./assets/favicon.ico">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./css/stapage.css">
+</head>
+<body>
+	<div class="center">
+		<div class="div1">
+            <h1>Check Status</h1>
+            <form id="loginForm" action="POST">
+              <div class="txt_field">
+                <input type="text" id="mmail" class="mmail" placeholder="" required>
+                <span></span>
+                <label>Manager Mail</label>
+              </div>
+              <div class="txt_field">
+                <input type="text" id="company" class="company" placeholder="" required>
+                <span></span>
+                <label>Compnay</label>
+              </div>
+              <input type="submit"  id="buttonregister" value="Submit">
+              <div class="signup_link">
+                Not a member? <a href="index.html">Signup</a>
+              </div>
+            </form>
+        </div>
+	</div>
+  <script src="./js/swal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+  <script src="./js/stapage.js"></script>
+</body>
+</html>
