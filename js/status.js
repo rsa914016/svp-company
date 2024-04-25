@@ -42,6 +42,7 @@ function gotData(data) {
                             <th>Branch</th>
                             <th>Graduation Year</th>
                             <th>Status</th>
+                            <th>Certificate</th>
                             </tr>
                           `; // Clear previous data
 
@@ -55,25 +56,58 @@ function gotData(data) {
                 const regex = new RegExp(searchString);
                 if(regex.test(`${record.roll_no}`) || regex.test(`${record.name}`.toLocaleLowerCase())){
                     const row = document.createElement('tr');
+                    if(record.status === 1){
+                        row.innerHTML = `
+                            <td>${record.roll_no}</td>
+                            <td style="text-align: left">${record.name}</td>
+                            <td>${record.branch}</td>
+                            <td>${record.g_year}</td>
+                            <td style="color:${c_dict[record.status]}">${s_dict[record.status]}</td>
+                            <td style="display:flex;gap:10px">
+                                <button style="font-size:15px" title="View" class=" btn btn-success" onclick="viewCertificate('${record.roll_no}')">View Certificate</button>
+                            </td>
+                        `;
+                    }
+                    else{
+                        row.innerHTML = `
+                            <td>${record.roll_no}</td>
+                            <td style="text-align: left">${record.name}</td>
+                            <td>${record.branch}</td>
+                            <td>${record.g_year}</td>
+                            <td style="color:${c_dict[record.status]}">${s_dict[record.status]}</td>
+                            <td style="display:flex;gap:10px">
+                                <button style="font-size:16px;width:140px" disabled title="View" class=" btn btn-secondary">Not Eligible</button>
+                            </td>
+                        `;
+                    }
+                    tableBody.appendChild(row);
+                    }
+                }
+            else{
+                const row = document.createElement('tr');
+                if(record.status === 1){
                     row.innerHTML = `
                         <td>${record.roll_no}</td>
                         <td style="text-align: left">${record.name}</td>
                         <td>${record.branch}</td>
                         <td>${record.g_year}</td>
                         <td style="color:${c_dict[record.status]}">${s_dict[record.status]}</td>
+                        <td style="display:flex;gap:10px">
+                            <button style="font-size:15px" title="View" class=" btn btn-success" onclick="viewCertificate('${record.roll_no}')">View Certificate</button>
+                        </td>
                     `;
-                    tableBody.appendChild(row);
-                    }
+                } else{
+                    row.innerHTML = `
+                        <td>${record.roll_no}</td>
+                        <td style="text-align: left">${record.name}</td>
+                        <td>${record.branch}</td>
+                        <td>${record.g_year}</td>
+                        <td style="color:${c_dict[record.status]}">${s_dict[record.status]}</td>
+                        <td style="display:flex;gap:10px">
+                            <button style="font-size:15px;width:140px" disabled title="View" class=" btn btn-secondary">Not Eligible</button>
+                        </td>
+                    `;
                 }
-            else{
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${record.roll_no}</td>
-                    <td style="text-align: left">${record.name}</td>
-                    <td>${record.branch}</td>
-                    <td>${record.g_year}</td>
-                    <td style="color:${c_dict[record.status]}">${s_dict[record.status]}</td>
-                `;
                 tableBody.appendChild(row);
             }
         });
@@ -84,3 +118,7 @@ function errData(err) {
     console.error(err);
 }
 
+function viewCertificate(val) {
+    sessionStorage.setItem("roll_no", val)
+    window.location.href = "certificate.html"
+}
