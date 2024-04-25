@@ -100,7 +100,7 @@ function checkStatus(){
         window.location.href = "login.html"
     }
     else{
-        window.location.href = "admin.html";
+        window.location.href = "status.html";
     }
   });
 }
