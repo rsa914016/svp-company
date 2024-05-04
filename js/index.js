@@ -28,12 +28,35 @@ function submitForm(e) {
   registerUser(mname, emailid, cname, roll, name, start, branch, driveLink);
 }
 
+
+function isValueInRollField(roll, cname) {
+  console.log('Hi')
+  return new Promise((resolve, reject) => {
+    var ref = firebase.database().ref('Users'); // Reference to the root of your database
+    ref.once("value", function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        console.log('Hi')
+        var childData = childSnapshot.val();
+        console.log(childData['company_name'], childData['roll_no'])
+        // Check if the email exists in the 'email' field
+        if (childData['company_name'] === cname && childData['roll_no'] === roll) {
+          console.log(childData['company_name'], childData['roll_no'])
+          resolve(true); // Resolve the promise if value is found
+        }
+      });
+      resolve(false); // Resolve false if value is not found in any record
+    }, function(error) {
+      reject(error); // Reject the promise if there's an error
+    });
+  });
+}
+
+
 // Function to register a user and check for duplicates using another unique value
 function registerUser(mname, memail, cname, roll, name, start, branch, driveLink) {
   // Check if the unique value already exists in the database
-  firebase.database().ref('Users').orderByChild('roll_no').equalTo(roll).once('value')
-    .then((snapshot) => {
-      if (snapshot.exists()) {
+  isValueInRollField(roll, cname).then((result) => {
+    if (result) {
         Swal.fire({
           icon: "error",
           title: "Duplicate User!",
@@ -41,7 +64,7 @@ function registerUser(mname, memail, cname, roll, name, start, branch, driveLink
           confirmButtonColor:"#0d6efd",
           timer: 6000
         }).then(() => {
-          document.getElementById("contactForm").reset()
+          // document.getElementById("contactForm").reset()
         });
         console.error("User with the provided Roll Number already exists.");
         // Handle the case where a user with the provided unique value already exists
@@ -83,8 +106,7 @@ function registerUser(mname, memail, cname, roll, name, start, branch, driveLink
       }
     })
     .catch((error) => {
-      console.error("Error checking for duplicate users:", error);
-      // Handle error while checking for duplicate users
+      console.error("Error:", error);
     });
 }
 
