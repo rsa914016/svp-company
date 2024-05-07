@@ -44,34 +44,53 @@ function isValueInEmailField(mmail, cname) {
 
 // Function to sign in a user
 function signInUser(email, company) {
-    isValueInEmailField(email, company).then((result) => {
-    if (result) {
-        Swal.fire({
-            title: "Verification Success!",
-            text: "Welcome To UCEK Portal",
-            icon: "success",
-            timer: 1500,
-            showConfirmButton: false,
-          }).then(() => {
+  
+    if(isValidEmailWithDomainList(email)){
+
+      isValueInEmailField(email, company).then((result) => {
+      if (result) {
+          Swal.fire({
+              title: "Login Success!",
+              text: "Welcome To UCEK Portal",
+              icon: "success",
+              timer: 1500,
+              showConfirmButton: false,
+            }).then(() => {
+                document.getElementById("loginForm").reset();
+                window.location.href = "status.html";
+                sessionStorage.setItem('company', company);
+            });
+      } else {
+          Swal.fire({
+              icon: "error",
+              title: "Login Failed!",
+              confirmButtonColor:"#0d6efd",
+              text: "Check Your Credentials",
+              timer: 1500
+            }).then(() => {
               document.getElementById("loginForm").reset();
-              window.location.href = "status.html";
-              sessionStorage.setItem('company', company);
-          });
-    } else {
-        Swal.fire({
-            icon: "error",
-            title: "Verification Failed!",
-            confirmButtonColor:"#0d6efd",
-            text: "Check Your Credentials",
-            timer: 1500
-          }).then(() => {
-            document.getElementById("loginForm").reset();
-          });
-      console.log("Value does not exist in the email field of Firebase records.");
-    }
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-  });
+            });
+        console.log("Value does not exist in the email field of Firebase records.");
+      }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  } else{
+    Swal.fire({
+      icon: "error",
+      title: "Login Failed!",
+      confirmButtonColor:"#0d6efd",
+      text: "Not A Registered Comapany With UCEK!",
+      timer: 1500
+    }).then(() => {
+      document.getElementById("loginForm").reset();
+    });
+  }
 }
 
+function isValidEmailWithDomainList(email) {
+  var validDomains = ["gmail.com", "tcs.com", "accenture.com", "apxor.com"]; 
+  var emailDomain = email.split('@')[1];
+  return validDomains.includes(emailDomain);
+}

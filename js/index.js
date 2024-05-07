@@ -83,6 +83,7 @@ function registerUser(mname, memail, cname, roll, name, start, branch, driveLink
               branch: branch,
               link: driveLink,
               status: 0,
+              dateTime: getCurrentDateTime()
               // You can add more user details here if needed
             })
             .then(() => {
@@ -114,7 +115,28 @@ const getElementVal = (id) => {
   return document.getElementById(id).value;
 };
 
+function getCurrentDateTime() {
+  // Get current date and time
+  var currentDate = new Date();
 
+  // Get day, month, year
+  var day = ('0' + currentDate.getDate()).slice(-2);
+  var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+  var year = currentDate.getFullYear();
+
+  // Get hours, minutes, seconds
+  var hours = ('0' + currentDate.getHours()).slice(-2);
+  var minutes = ('0' + currentDate.getMinutes()).slice(-2);
+
+  // Format AM/PM
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // Handle midnight
+  var formattedTime = hours + ':' + minutes + ' ' + ampm;
+
+  // Return formatted date and time
+  return day + '-' + month + '-' + year + '  ' + formattedTime;
+}
 
 function checkStatus(){
   firebase.auth().onAuthStateChanged((user) => {

@@ -41,6 +41,7 @@ function gotData(data) {
                             <th>Name</th>
                             <th>Branch</th>
                             <th>Graduation Year</th>
+                            <th>Applied Date</th>
                             <th>Status</th>
                             <th>Certificate</th>
                             </tr>
@@ -62,6 +63,7 @@ function gotData(data) {
                             <td style="text-align: left">${record.name}</td>
                             <td>${record.branch}</td>
                             <td>${record.g_year}</td>
+                            <td>${record.dateTime}</td>
                             <td style="color:${c_dict[record.status]}">${s_dict[record.status]}</td>
                             <td style="display:flex;gap:10px">
                                 <button style="font-size:15px" title="View" class=" btn btn-success" onclick="viewCertificate('${record.roll_no}')">View Certificate</button>
@@ -74,6 +76,7 @@ function gotData(data) {
                             <td style="text-align: left">${record.name}</td>
                             <td>${record.branch}</td>
                             <td>${record.g_year}</td>
+                            <td>${record.dateTime}</td>
                             <td style="color:${c_dict[record.status]}">${s_dict[record.status]}</td>
                             <td style="display:flex;gap:10px">
                                 <button style="font-size:16px;width:140px" disabled title="View" class=" btn btn-secondary">Not Eligible</button>
@@ -91,6 +94,7 @@ function gotData(data) {
                         <td style="text-align: left">${record.name}</td>
                         <td>${record.branch}</td>
                         <td>${record.g_year}</td>
+                        <td>${record.dateTime}</td>
                         <td style="color:${c_dict[record.status]}">${s_dict[record.status]}</td>
                         <td style="display:flex;gap:10px">
                             <button style="font-size:15px" title="View" class=" btn btn-success" onclick="viewCertificate('${record.roll_no}')">View Certificate</button>
@@ -102,6 +106,7 @@ function gotData(data) {
                         <td style="text-align: left">${record.name}</td>
                         <td>${record.branch}</td>
                         <td>${record.g_year}</td>
+                        <td>${record.dateTime}</td>
                         <td style="color:${c_dict[record.status]}">${s_dict[record.status]}</td>
                         <td style="display:flex;gap:10px">
                             <button style="font-size:15px;width:140px" disabled title="View" class=" btn btn-secondary">Not Eligible</button>
