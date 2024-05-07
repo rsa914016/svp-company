@@ -54,7 +54,7 @@ function gotData(data) {
         Object.keys(records).forEach(key => {
             const record = records[key];
             if(searchString != ''){
-                const regex = new RegExp(searchString);
+                const regex = new RegExp(searchString.toLocaleLowerCase());
                 if(regex.test(`${record.roll_no}`) || regex.test(`${record.name}`.toLocaleLowerCase())){
                     const row = document.createElement('tr');
                     if(record.status === 1){
