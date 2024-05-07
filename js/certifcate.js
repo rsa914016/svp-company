@@ -39,8 +39,8 @@ function generatePDF() {
         dataelement.innerHTML = `This is to certify that <b>${sname}</b>, with Roll No. <b>${roll}</b>,
         is a genuine student of this college. He/She pursued his graduation in the field
         of <b>${branch}</b> during the academic year <b>${gyear-4} - ${gyear}</b>.
-        This certificate confirms that the student is validly enrolled and is affiliated 
-        with the University JNTUK.`
+        This certificate confirms that the student is genuinly enrolled and is affiliated 
+        with <b>University College Of Engineering Kakinada.</b>`
     })
   });
 }
