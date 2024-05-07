@@ -50,7 +50,7 @@ body {
 .inputBox input[type="email"],
 .inputBox input[type="tel"],
 .inputBox input[type="date"],
-.inputBox input[type="url"],
+.inputBox input[type="file"],
 .inputBox input[type="number"],
 .inputBox textarea,
 .inputBox select {
@@ -122,6 +122,7 @@ body {
 }
 
 .banner-img{
+    padding-left: 120px;
     width:35%;
     /* heightttt%; */
 }

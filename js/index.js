@@ -10,7 +10,11 @@ const firebaseConfig = {
   
 // initialize firebase
 firebase.initializeApp(firebaseConfig);
+var file = ""
 document.getElementById("contactForm").addEventListener("submit", submitForm);
+fileInput.addEventListener('change', function(e) {
+  file = e.target.files[0];
+});
 
 function submitForm(e) {
   // alert("Hii!");
@@ -18,24 +22,24 @@ function submitForm(e) {
 
   var mname = getElementVal("mname");
   var emailid = getElementVal("emailid");
+  var phno = getElementVal("phno")
   var cname = getElementVal("cname");
 
   var name = getElementVal("name");
   var roll = getElementVal("roll");
   var start = getElementVal("start");
   var branch = getElementVal("branch");
-  var driveLink = getElementVal("link");
-  registerUser(mname, emailid, cname, roll, name, start, branch, driveLink);
+  registerUser(mname, emailid, phno, cname, roll, name, start, branch, file);
 }
 
 
 function isValueInRollField(roll, cname) {
-  console.log('Hi')
+  // console.log('Hi')
   return new Promise((resolve, reject) => {
     var ref = firebase.database().ref('Users'); // Reference to the root of your database
     ref.once("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
-        console.log('Hi')
+        // console.log('Hi')
         var childData = childSnapshot.val();
         console.log(childData['company_name'], childData['roll_no'])
         // Check if the email exists in the 'email' field
@@ -53,7 +57,7 @@ function isValueInRollField(roll, cname) {
 
 
 // Function to register a user and check for duplicates using another unique value
-function registerUser(mname, memail, cname, roll, name, start, branch, driveLink) {
+function registerUser(mname, memail, phno, cname, roll, name, start, branch, file) {
   // Check if the unique value already exists in the database
   isValueInRollField(roll, cname).then((result) => {
     if (result) {
@@ -74,31 +78,39 @@ function registerUser(mname, memail, cname, roll, name, start, branch, driveLink
             // Add user details to the Realtime Database
             firebase.database().ref('Users/').push({
               manager_name: mname,
-              manager_email: memail,  
+              manager_email: memail, 
+              manager_phone: phno, 
               company_name: cname,
 
               roll_no: roll,
               name: name,
               g_year: start,
               branch: branch,
-              link: driveLink,
               status: 0,
               dateTime: getCurrentDateTime()
               // You can add more user details here if needed
             })
             .then(() => {
-              Swal.fire({
-                title: "Registration Successfull!",
-                text: "User Added To The Verification Queue",
-                icon: "success",
-                confirmButtonColor:"#0d6efd",
-                timer: 3000
-              }).then(() => {
-                document.getElementById("contactForm").reset();
-            })
-              // reset the form
-              console.log("User added to database");
+              const storageRef = firebase.storage().ref();
+              const pdfRef = storageRef.child('pdfs/' + roll);
+              pdfRef.put(file).then((snapshot) => {
+                console.log('PDF uploaded successfully!');
+                Swal.fire({
+                  title: "Registration Successfull!",
+                  text: "User Added To The Verification Queue",
+                  icon: "success",
+                  confirmButtonColor:"#0d6efd",
+                  timer: 3000
+                }).then(() => {
+                  document.getElementById("contactForm").reset();
+                  console.log("User added to database");
               // You can perform further actions after adding user to the database
+                  }).catch((error) => {
+                console.error('Error uploading PDF:', error);
+                alert('Error uploading PDF');
+            });
+            })
+              
             })
             .catch((error) => {
               console.error("Error adding user to database:", error);
@@ -135,8 +147,28 @@ function getCurrentDateTime() {
   var formattedTime = hours + ':' + minutes + ' ' + ampm;
 
   // Return formatted date and time
-  return day + '-' + month + '-' + year + '  ' + formattedTime;
+  return day + '/' + month + '/' + year + '    ' + formattedTime;
 }
+
+
+function uploadFile() {
+  const fileInput = document.getElementById('fileInput');
+  const file = fileInput.files[0];
+
+  
+
+  const storageRef = firebase.storage().ref();
+  const pdfRef = storageRef.child('pdfs/' + file.name);
+
+  pdfRef.put(file).then((snapshot) => {
+      console.log('PDF uploaded successfully!');
+      alert('PDF uploaded successfully!');
+  }).catch((error) => {
+      console.error('Error uploading PDF:', error);
+      alert('Error uploading PDF');
+  });
+}
+
 
 function checkStatus(){
   firebase.auth().onAuthStateChanged((user) => {

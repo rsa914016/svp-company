@@ -90,7 +90,6 @@ function signInUser(email, company) {
 }
 
 function isValidEmailWithDomainList(email) {
-  var validDomains = ["gmail.com", "tcs.com", "accenture.com", "apxor.com"]; 
-  var emailDomain = email.split('@')[1];
-  return validDomains.includes(emailDomain);
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 }
