@@ -31,7 +31,8 @@ function isValueInEmailField(mmail, cname) {
         snapshot.forEach(function(childSnapshot) {
           var childData = childSnapshot.val();
           // Check if the email exists in the 'email' field
-          if (childData['company_name'] === cname && childData['manager_email'] === mmail) {
+          if (childData['company_name'] === cname.toUpperCase() && 
+                    childData['manager_email'].toLowerCase() === mmail.toLowerCase()) {
             resolve(true); // Resolve the promise if value is found
           }
         });
@@ -58,7 +59,7 @@ function signInUser(email, company) {
             }).then(() => {
                 document.getElementById("loginForm").reset();
                 window.location.href = "status.html";
-                sessionStorage.setItem('company', company);
+                sessionStorage.setItem('company', company.toUpperCase());
             });
       } else {
           Swal.fire({

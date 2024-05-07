@@ -80,7 +80,7 @@ function registerUser(mname, memail, phno, cname, roll, name, start, branch, fil
               manager_name: mname,
               manager_email: memail, 
               manager_phone: phno, 
-              company_name: cname,
+              company_name: cname.toUpperCase(),
 
               roll_no: roll,
               name: name,
