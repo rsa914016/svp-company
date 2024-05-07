@@ -136,18 +136,10 @@ function getCurrentDateTime() {
   var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
   var year = currentDate.getFullYear();
 
-  // Get hours, minutes, seconds
-  var hours = ('0' + currentDate.getHours()).slice(-2);
-  var minutes = ('0' + currentDate.getMinutes()).slice(-2);
 
-  // Format AM/PM
-  var ampm = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12;
-  hours = hours ? hours : 12; // Handle midnight
-  var formattedTime = hours + ':' + minutes + ' ' + ampm;
 
   // Return formatted date and time
-  return day + '/' + month + '/' + year + '    ' + formattedTime;
+  return day + '/' + month + '/' + year;
 }
 
 
