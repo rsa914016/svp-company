@@ -41,9 +41,9 @@ function isValueInRollField(roll, cname) {
       snapshot.forEach(function(childSnapshot) {
         // console.log('Hi')
         var childData = childSnapshot.val();
-        console.log(childData['company_name'], childData['roll_no'])
+        // console.log(childData['company_name'], childData['roll_no'])
         // Check if the email exists in the 'email' field
-        if (childData['company_name'] === cname && childData['roll_no'] === roll) {
+        if (childData['company_name'] === cname.toUpperCase() && childData['roll_no'] === roll) {
           console.log(childData['company_name'], childData['roll_no'])
           resolve(true); // Resolve the promise if value is found
         }
@@ -83,7 +83,7 @@ function registerUser(mname, memail, phno, cname, roll, name, start, branch, fil
               company_name: cname.toUpperCase(),
 
               roll_no: roll,
-              name: name,
+              name: name.toUpperCase(),
               g_year: start,
               branch: branch,
               status: 0,
@@ -91,10 +91,12 @@ function registerUser(mname, memail, phno, cname, roll, name, start, branch, fil
               // You can add more user details here if needed
             })
             .then(() => {
+              document.getElementById('loadingOverlay').style.display = 'flex';
               const storageRef = firebase.storage().ref();
               const pdfRef = storageRef.child('pdfs/' + roll);
               pdfRef.put(file).then((snapshot) => {
                 console.log('PDF uploaded successfully!');
+                document.getElementById('loadingOverlay').style.display = 'none';
                 Swal.fire({
                   title: "Registration Successfull!",
                   text: "User Added To The Verification Queue",
@@ -140,25 +142,6 @@ function getCurrentDateTime() {
 
   // Return formatted date and time
   return day + '/' + month + '/' + year;
-}
-
-
-function uploadFile() {
-  const fileInput = document.getElementById('fileInput');
-  const file = fileInput.files[0];
-
-  
-
-  const storageRef = firebase.storage().ref();
-  const pdfRef = storageRef.child('pdfs/' + file.name);
-
-  pdfRef.put(file).then((snapshot) => {
-      console.log('PDF uploaded successfully!');
-      alert('PDF uploaded successfully!');
-  }).catch((error) => {
-      console.error('Error uploading PDF:', error);
-      alert('Error uploading PDF');
-  });
 }
 
 
