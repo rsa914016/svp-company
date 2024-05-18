@@ -26,7 +26,7 @@
             <div class="d-flex justify-content-between">
                 <div class="col-4">
                     <p class="mt-5 mdata">
-                        vice-principal.jntucek.ac.in
+                        viceprincipal.ucek@jntucek.ac.in
                     </p>
                 </div>
                 <div>
@@ -38,7 +38,8 @@
                 </div>
                 <div class="text-right">
                     <p class="mt-5 mdata">
-                        Phone: Off No: 0884 2300830
+                        Phone: Off No: 0884 2300830<br>
+                        Mobile No: 9989901433
                     </p>
                 </div>
             </div>
@@ -53,11 +54,14 @@
                 <h6>
                     JAWAHARLAL NEHRU TECHNOLOGICAL UNIVERSITY KAKINADA
                 </h6>
+                <h6>
+                    KAKINADA-533003, Andhra Pradesh
+                </h6>
             </div>
             <hr style="border: 1.4px solid #000" />
             <div class="d-flex justify-content-between">
                 <div>
-                    <!-- <p>Lr. No.</p> -->
+                    <p>Lr. No.B3/B.Tech/2024</p>
                 </div>
                 <div>
                     <p id="date_">Date: {{ today_date }}</p>
@@ -65,22 +69,26 @@
             </div>
             <div class="mt-3">
                 <p>
-                    <b>Dr.U V Ratna Kumari,</b>
+                    <b>Dr.U. V.Ratna Kumari,</b>
                 </p>
                 <p class="mt-3">
-                    M.Tech, Ph.D
+                    M.Tech, Ph.D.,
+                </p>
+                <p class="mt-3">
+                    Professor of Electronic and Communication Engineering,
                 </p>
                 <p>
-                    <b>Vice-Principal</b>
+                    <b>VICE-PRINCIPAL</b>
                 </p>
             </div>
-            <div class="section mt-5">
-                <div class="mt-5">
-                    <h2 class="text-center mt-5">
-                        <b>Certificate Of Authenticity</b>
+            <br>
+            <div class="section mt-3">
+                <div class="mt-3">
+                    <h2 class="text-center mt-3" style="font-size: 26px;text-decoration: underline;">
+                        <b>CERTIFICATE OF AUTHENTICITY</b>
                     </h2>
                 </div>
-                <div>
+            <div>
                     <p id="data_" class="mt-3 lh-lg">
                         <span class="mx-4"></span>
                         This is to certify that {{ Student Name }}, with Roll No. {{ Student Roll Number }},
@@ -96,9 +104,17 @@
                     </p> -->
                 </div>
             </div>
-            <div class="mt-5 sign">
+            <br>
+            <div class="mt-3 sign">
                 <p class="mt-5 d-flex flex-row-reverse">
-                    VICE PRINCIPAL
+                    <img src="./assets/img/sign.png" style="height: 10%; width: 20%;"><br>
+                    <!-- <b>VICE-PRINCIPAL</b> -->
+                </p>
+            </div>
+            <div class="">
+                <p class="d-flex flex-row-reverse">
+                    <!-- <img src="assets/sign.png" style="height: 10%; width: 20%;"><br> -->
+                    <b>VICE-PRINCIPAL</b>
                 </p>
             </div>
     </div>
@@ -112,7 +128,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
-    <script src="./js/swal.js"></script>
+    <script src="<?php echo site_url('assets/svp/js/swal.js'); ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
@@ -136,7 +152,7 @@
 
         const key = sessionStorage.getItem('roll_no');
         if(!key){
-            window.location.href = "status.html"
+            window.location.href = "<?php echo site_url('Genunity-Verification-Status'); ?>"
         }
 
 
@@ -151,17 +167,17 @@
             Object.keys(userData).forEach(key => {
                 const record = userData[key];
                 if(record.status != 1){
-                    window.location.href = "status.html"
+                    window.location.href = "<?php echo site_url('Genunity-Verification-Status'); ?>"
                 }
                 sname=record.name;
                 roll=record.roll_no;
                 branch = record.branch;
                 gyear = record.g_year;
-                dataelement.innerHTML = `This is to certify that <b>${sname}</b>, with Roll No. <b>${roll}</b>,
+                dataelement.innerHTML = `<div>This is to certify that <b>${sname}</b>, with Roll No. <b>${roll}</b>,
                 is a genuine student of this college. He/She pursued his graduation in the field
                 of <b>${branch}</b> during the academic year <b>${gyear-4} - ${gyear}</b>.
                 This certificate confirms that the student is genuinly enrolled and is affiliated 
-                with <b>University College Of Engineering Kakinada.</b>`
+                with <b>University College Of Engineering Kakinada.</b></div>`
             })
         });
     }
@@ -172,7 +188,7 @@
         const month = (today.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because getMonth() returns 0-based month index
         const year = today.getFullYear().toString();
 
-        const formattedDate = `Date: ${day}-${month}-${year}`;
+        const formattedDate = `Date: ${day}/${month}/${year}`;
         return formattedDate;
     }
 
@@ -191,7 +207,7 @@
     function download(){
     var element = document.getElementById('certificate');
     var opt = {
-    filename:     'myfile.pdf',
+    filename:     roll + '.pdf',
     html2canvas:  { scale: 5 },
     jsPDF:        { unit: 'in', orientation: 'portrait' }
     };
