@@ -93,7 +93,7 @@
             }).then(() => {
                 document.getElementById("loginForm").reset();
                 window.location.href = "status.html";
-                sessionStorage.setItem('company', company.toUpperCase());
+                sessionStorage.setItem('managermail', email);
             });
       } else {
           Swal.fire({
@@ -125,9 +125,9 @@
 }
 
     function isValidEmailWithDomainList(email) {
-  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
   </script>
 </body>
 </html>

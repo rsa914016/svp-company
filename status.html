@@ -43,17 +43,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <script>
       const firebaseConfig = {
       apiKey: "AIzaSyBreCJDwBdF_HdIb2syX_rLgpkdLKUann0",
@@ -69,8 +58,8 @@
     const database = firebase.database();
     const ref = database.ref('Users');
     var searchString= "";
-    const company = sessionStorage.getItem('company');
-    if(!company){
+    const managermail = sessionStorage.getItem('managermail');
+    if(!managermail){
         window.location.href = "login.html"
     }
 
@@ -78,13 +67,13 @@
         window.location.reload();
     }
 
-    ref.orderByChild('company_name').equalTo(company).once('value', gotData, errData);
+    ref.orderByChild('manager_email').equalTo(managermail).once('value', gotData, errData);
 
     function searchTable(){
-    var inputField = document.getElementById("search");
-    searchString = inputField.value;
-    ref.orderByChild('company_name').equalTo(company).once('value', gotData, errData);
-}
+        var inputField = document.getElementById("search");
+        searchString = inputField.value;
+        ref.orderByChild('manager_email').equalTo(managermail).once('value', gotData, errData);
+    }
 
     function gotData(data) {
         const tableBody = document.querySelector('#data-table tbody');
